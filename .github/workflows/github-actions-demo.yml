@@ -6,5 +6,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 job.py
+        env:
+          SECRET_API_TOKEN: ${{ secrets.SECRET_API_TOKEN }}
       - run: echo "Fichier genere par la pipeline" > resultat.txt
       - run: ls -l
+      - run: echo "Le secret vaut ${{ secrets.SECRET_API_TOKEN }}"
+      - run: |
+          if [ "${{ secrets.SECRET_API_TOKEN }}" = "42" ]; then
+            echo "Secret accessible"
+          else
+            echo "Secret introuvable"
+          fi
